@@ -1,34 +1,36 @@
 import React from 'react';
-import { createRoot } from 'react-dom/client';
-import './index.css';
+// import { createRoot } from 'react-dom/client';
+import { render } from "react-dom";
 import App from './App';
-import {
-    ApolloClient,
-    ApolloProvider,
-    InMemoryCache
-} from "@apollo/client";
-
-import { setMarkedBusinesses } from "./modules/fullstack-graphql-book/src/components/markedBusinesses";
-
+import './index.css';
+// import {
+//     ApolloClient,
+//     ApolloProvider,
+//     InMemoryCache
+// } from "@apollo/client";
+//
+// import { setMarkedBusinesses } from "./modules/fullstack-graphql-book/src/components/markedBusinesses";
+//
+// const
+//     client = new ApolloClient(
+//     {
+//         uri: import.meta.env.VITE_GRAPHQL_LOCAL_API,
+//         cache: new InMemoryCache({
+//             typePolicies: {
+//                 Business: {
+//                     fields: {
+//                         businessMarked: {
+//                             read(_, { readField }) {
+//                                 return setMarkedBusinesses().includes(readField("businessId"));
+//                             },
+//                         },
+//                     },
+//                 },
+//             },
+//         }),
+//         // link: new HttpLink({ uri: `${import.meta.env.VITE_GRAPHQL_LOCAL_API}/', fetch })
+//     }),
 const
-    client = new ApolloClient(
-    {
-        uri: import.meta.env.VITE_GRAPHQL_LOCAL_API,
-        cache: new InMemoryCache({
-            typePolicies: {
-                Business: {
-                    fields: {
-                        businessMarked: {
-                            read(_, { readField }) {
-                                return setMarkedBusinesses().includes(readField("businessId"));
-                            },
-                        },
-                    },
-                },
-            },
-        }),
-        // link: new HttpLink({ uri: `${import.meta.env.VITE_GRAPHQL_LOCAL_API}/', fetch })
-    }),
     root_id = 'react-app',
     root_container = document.getElementById(root_id),
     root_content = document.createElement("div"),
@@ -47,14 +49,20 @@ const
             }
         }
 
-        const root = createRoot(root_container);
-        root.render(
+        // const root = createRoot(root_container);
+        // root.render(
+        //     <React.StrictMode>
+        //         <App content={ () => root_content } />
+        //     </React.StrictMode>
+        // );
+        render(
             <React.StrictMode>
-                <ApolloProvider client={client}>
-                    <App content={ () => root_content } />
-                </ApolloProvider>
-            </React.StrictMode>
-        )
+                {/*<ApolloProvider client={client}>*/}
+                    <App content={() => root_content} />
+                {/*</ApolloProvider>*/}
+            </React.StrictMode>,
+            root_container
+        );
 
         root_container.style.opacity = "1.0";
     };
